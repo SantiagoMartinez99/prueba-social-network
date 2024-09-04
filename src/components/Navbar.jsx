@@ -1,4 +1,17 @@
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+
 function Navbar() {
+  const { user, loginWithGoogle, logout } = useAuth();
+
+  const handleLogin = () => {
+    loginWithGoogle();
+  };
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -68,7 +81,15 @@ function Navbar() {
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Login</a>
+        {user ? (
+          <>
+            <img src={user.photoURL} alt={user.displayName} />
+            <p>Hola, {user.displayName}</p>
+            <button onClick={handleLogout}>Cerrar sesión</button>
+          </>
+        ) : (
+          <button onClick={handleLogin}>Iniciar sesión con Google</button>
+        )}
       </div>
     </div>
   );
