@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { db, storage } from "../firebase";
 import ImageFilter from "./ImageFilter";
+import { collection, addDoc } from "firebase/firestore";
+import { v4 as uuidv4 } from "uuid";
 
 const dataURLToBlob = (dataURL) => {
   const [header, data] = dataURL.split(",");
@@ -20,6 +22,7 @@ function ModalNewPost({ isOpen, setIsOpen }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { user } = useAuth();
+  const [description, setDescription] = useState(""); // Nueva variable para la descripción
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -33,7 +36,13 @@ function ModalNewPost({ isOpen, setIsOpen }) {
     }
   };
 
-  const uploadImageToFirestore = async (file, userId) => {
+  const uploadImageToFirestore = async (
+    file,
+    userId,
+    userName,
+    userPhotoURL,
+    description
+  ) => {
     if (!file) {
       console.error("No file selected");
       return;
@@ -45,31 +54,39 @@ function ModalNewPost({ isOpen, setIsOpen }) {
     }
 
     try {
-      const storageRef = ref(storage, `uploads/${userId}/${file.name}`);
-      console.log("Storage reference:", storageRef);
+      const uniqueFileName = `${userId}-${uuidv4()}`;
+      const storageRef = ref(storage, `uploads/${userId}/${uniqueFileName}`);
 
       const snapshot = await uploadBytes(storageRef, file);
-      console.log("Uploaded a blob or file!", snapshot);
-
       const downloadURL = await getDownloadURL(storageRef);
 
-      const docRef = doc(db, "userUploads", userId);
-      await setDoc(docRef, {
+      await addDoc(collection(db, "posts"), {
+        userId: userId,
+        userName: userName,
+        userPhotoURL: userPhotoURL,
         imageURL: downloadURL,
+        description: description || "",
+        likes: 0,
+        comments: [],
         uploadedAt: new Date(),
       });
 
-      console.log("File uploaded and URL saved to Firestore!");
+      console.log("File uploaded and post saved to Firestore!");
     } catch (error) {
-      console.error("Error uploading file or saving URL:", error);
+      console.error("Error uploading file or saving post:", error);
     }
   };
-
   const handleUploadClick = () => {
     if (selectedImage) {
       const blob = dataURLToBlob(selectedImage);
       const file = new File([blob], "uploaded_image.jpg", { type: blob.type });
-      uploadImageToFirestore(file, user.uid);
+      uploadImageToFirestore(
+        file,
+        user.uid,
+        user.displayName,
+        user.photoURL,
+        "Tu descripción aquí"
+      );
     }
   };
 
