@@ -30,7 +30,7 @@ function Hero() {
             comentarios. ¡Haz que cada instante cuente y mantén vivas tus
             conexiones!
           </p>
-          <button className="btn btn-primary text-white text-xl ">
+          <button className="btn btn-primary text-white text-xl">
             Unete ahora
           </button>
         </div>

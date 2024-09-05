@@ -1,15 +1,27 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const { user, loginWithGoogle, logout } = useAuth();
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    loginWithGoogle();
+  const handleLogin = async () => {
+    try {
+      await loginWithGoogle();
+      navigate("/foryou");
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/login");
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
 
   return (
@@ -80,11 +92,15 @@ function Navbar() {
           </li>
         </ul>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-end gap-2 m-4">
         {user ? (
           <>
-            <img src={user.photoURL} alt={user.displayName} />
-            <p>Hola, {user.displayName}</p>
+            <img
+              className="ring-primary ring-offset-base-100 w-10 rounded-full ring ring-offset-2"
+              src={user.photoURL}
+              alt={user.displayName}
+            />
+            {/* <p>Hola, {user.displayName}</p> */}
             <button onClick={handleLogout}>Cerrar sesión</button>
           </>
         ) : (
