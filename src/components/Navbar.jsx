@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import useAuthStore from "../store/storeAuth";
 
 function Navbar() {
-  const { user, loginWithGoogle, logout } = useAuth();
+  const { user, loginWithGoogle, logout } = useAuthStore();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -17,7 +17,7 @@ function Navbar() {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error("Error during logout:", error);
     }
@@ -37,21 +37,16 @@ function Navbar() {
                 <label tabIndex="0">
                   <div className="avatar online hover:cursor-pointer">
                     <div className="w-16 rounded-full">
-                      <img src={user.photoURL} />
+                      <img src={user.photoURL} alt="User Avatar" />
                     </div>
                   </div>
                 </label>
-
                 <ul
                   tabIndex="0"
                   className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 text-black"
                 >
-                  <li>
-                    <a>Perfil</a>
-                  </li>
-                  <li>
-                    <a>Configuración</a>
-                  </li>
+                  <li><a>Perfil</a></li>
+                  <li><a>Configuración</a></li>
                   <li>
                     <button onClick={handleLogout}>Cerrar sesión</button>
                   </li>
@@ -61,7 +56,7 @@ function Navbar() {
           </>
         ) : (
           <button
-            className="btn  bg-transparent shadow-none border-none text-2xl md:text-4xl font-bold hover:bg-pink-500  text-white"
+            className="btn bg-transparent shadow-none border-none text-2xl md:text-4xl font-bold hover:bg-pink-500 text-white"
             onClick={handleLogin}
           >
             Iniciar sesión

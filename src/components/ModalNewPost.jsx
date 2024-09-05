@@ -1,7 +1,7 @@
 import { doc, setDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import useAuthStore from "../store/storeAuth";
 import { db, storage } from "../firebase";
 import ImageFilter from "./ImageFilter";
 import { collection, addDoc } from "firebase/firestore";
@@ -23,7 +23,7 @@ const dataURLToBlob = (dataURL) => {
 function ModalNewPost({ isOpen, setIsOpen }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   const [description, setDescription] = useState(""); // Nueva variable para la descripción
 
   const handleImageChange = (event) => {

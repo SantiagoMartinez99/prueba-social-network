@@ -8,14 +8,14 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { useAuth } from "../context/AuthContext";
+import useAuthStore from "../store/storeAuth";
 import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
   const [commentText, setCommentText] = useState("");
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
