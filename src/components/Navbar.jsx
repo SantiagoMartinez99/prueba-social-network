@@ -24,27 +24,9 @@ function Navbar() {
   };
 
   return (
-    <div className="navbar animated-background bg-gradient-to-r from-indigo-400 to-cyan-400 absolute top-0">
+    <div className="navbar animated-background bg-gradient-to-r from-indigo-400 to-cyan-400 absolute top-0 font-inter">
       <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
-          </div>
-        </div>
-        <a className="btn btn-ghost text-xl text-white">PhotoU</a>
+        <a className="btn btn-ghost text-3xl text-white">PhotoU</a>
       </div>
       <div className="navbar-center hidden lg:flex"></div>
       <div className="navbar-end gap-2 m-4 text-white">
@@ -80,7 +62,12 @@ function Navbar() {
             {/* <p>Hola, {user.displayName}</p> */}
           </>
         ) : (
-          <button onClick={handleLogin}>Iniciar sesión con Google</button>
+          <button
+            className="btn  bg-transparent shadow-none border-none text-4xl font-bold hover:bg-pink-500  text-white"
+            onClick={handleLogin}
+          >
+            Iniciar sesión
+          </button>
         )}
       </div>
     </div>

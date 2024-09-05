@@ -3,7 +3,7 @@ import NewPostImg from "../assets/newpostImg.png";
 
 function Hero() {
   return (
-    <div className="hero animated-background bg-gradient-to-r from-indigo-400 to-cyan-400 min-h-screen pt-10">
+    <div className="hero animated-background bg-gradient-to-r from-indigo-400 to-cyan-400 min-h-screen pt-10 font-inter">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="bg-white relative translate-x-24">
           <img
@@ -20,10 +20,10 @@ function Hero() {
           />
         </div>
         <div>
-          <h1 className="text-7xl font-bold text-white font-inter">
+          <h1 className="text-7xl font-bold text-white">
             Comparte los momentos más especiales con quienes más te importan.
           </h1>
-          <p className="text-3xl py-6 text-white font-inter">
+          <p className="text-3xl py-6 text-white">
             Captura y comparte tus recuerdos favoritos en nuestra red social de
             imágenes. Conéctate con amigos y familiares a través de fotos y
             comentarios. ¡Haz que cada instante cuente y mantén vivas tus

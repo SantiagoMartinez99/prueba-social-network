@@ -39,26 +39,21 @@ function ModalNewPost({ isOpen, setIsOpen }) {
       return;
     }
 
-    // Verifica el nombre del archivo
     if (!file.name) {
       console.error("File name is undefined");
       return;
     }
 
     try {
-      // Crear una referencia en Storage
       const storageRef = ref(storage, `uploads/${userId}/${file.name}`);
       console.log("Storage reference:", storageRef);
 
-      // Subir el archivo a Storage
       const snapshot = await uploadBytes(storageRef, file);
       console.log("Uploaded a blob or file!", snapshot);
 
-      // Obtener la URL de descarga
       const downloadURL = await getDownloadURL(storageRef);
 
-      // Guardar la URL en Firestore
-      const docRef = doc(db, "userUploads", userId); // Cambia "userUploads" por tu colección y "userId" por el identificador adecuado
+      const docRef = doc(db, "userUploads", userId);
       await setDoc(docRef, {
         imageURL: downloadURL,
         uploadedAt: new Date(),
@@ -73,7 +68,7 @@ function ModalNewPost({ isOpen, setIsOpen }) {
   const handleUploadClick = () => {
     if (selectedImage) {
       const blob = dataURLToBlob(selectedImage);
-      const file = new File([blob], "uploaded_image.jpg", { type: blob.type }); // Asegúrate de que el nombre del archivo esté definido
+      const file = new File([blob], "uploaded_image.jpg", { type: blob.type });
       uploadImageToFirestore(file, user.uid);
     }
   };
