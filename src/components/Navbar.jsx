@@ -26,7 +26,12 @@ function Navbar() {
   return (
     <nav className="navbar animated-background bg-gradient-to-r from-indigo-400 to-cyan-400 fixed top-0 font-inter z-50 transition-transform duration-200 ease-in-out">
       <div className="navbar-start">
-        <a className="btn btn-ghost text-3xl text-white">PhotoU</a>
+        <a
+          className="btn btn-ghost text-3xl text-white"
+          onClick={() => navigate("/")}
+        >
+          PhotoU
+        </a>
       </div>
       <div className="navbar-center hidden lg:flex"></div>
       <div className="navbar-end gap-2 m-4 text-white">
@@ -45,8 +50,13 @@ function Navbar() {
                   tabIndex="0"
                   className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 text-black"
                 >
-                  <li><a>Perfil</a></li>
-                  <li><a>Configuración</a></li>
+                  <li>
+                    <a onClick={() => navigate("/foryou")}>Para mi</a>
+                  </li>
+                  <li>
+                    <a>Perfil</a>
+                  </li>
+
                   <li>
                     <button onClick={handleLogout}>Cerrar sesión</button>
                   </li>
