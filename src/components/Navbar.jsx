@@ -25,7 +25,7 @@ function Navbar() {
   };
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar animated-background bg-gradient-to-r from-indigo-400 to-cyan-400 ">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -92,7 +92,7 @@ function Navbar() {
           </li>
         </ul>
       </div>
-      <div className="navbar-end gap-2 m-4">
+      <div className="navbar-end gap-2 m-4 text-white">
         {user ? (
           <>
             <img
