@@ -8,7 +8,7 @@ import {
 
 function Post() {
   return (
-    <div className="card max-w-md mx-auto bg-base-100 shadow-xl">
+    <div className="card max-w-md mx-auto bg-base-100 shadow-xl my-40">
       <div className="card-body p-4">
         <div className="flex items-center gap-4">
           <div className="avatar">

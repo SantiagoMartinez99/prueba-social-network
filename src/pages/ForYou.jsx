@@ -9,7 +9,7 @@ function ForYou() {
     <div>
       <Post />
       <button
-        className="bg-orange-500 absolute bottom-5 right-5 text-4xl rounded-full w-14 h-14 flex items-center justify-center text-white hover:cursor-pointer hover:bg-orange-400"
+        className="bg-gradient-to-r from-indigo-400 to-cyan-400 absolute bottom-5 right-5 text-4xl rounded-full w-14 h-14 flex items-center justify-center text-white hover:cursor-pointer hover:bg-orange-400"
         onClick={() => setIsOpen(true)}
       >
         +

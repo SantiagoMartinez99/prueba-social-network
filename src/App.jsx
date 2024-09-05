@@ -8,7 +8,7 @@ import { useAuth } from "./context/AuthContext";
 function App() {
   const ProtectedRoute = ({ element }) => {
     const { user } = useAuth();
-    return user ? element : <Navigate to="/login" />;
+    return user ? element : <Navigate to="/foryou" />;
   };
 
   return (

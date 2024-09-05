@@ -25,7 +25,7 @@ function Navbar() {
   };
 
   return (
-    <div className="navbar animated-background bg-gradient-to-r from-indigo-400 to-cyan-400 ">
+    <div className="navbar animated-background bg-gradient-to-r from-indigo-400 to-cyan-400 absolute top-0">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -44,64 +44,41 @@ function Navbar() {
               />
             </svg>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-          >
-            <li>
-              <a>Item 1</a>
-            </li>
-            <li>
-              <a>Parent</a>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a>Item 3</a>
-            </li>
-          </ul>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <a className="btn btn-ghost text-xl text-white">PhotoU</a>
       </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <a>Item 1</a>
-          </li>
-          <li>
-            <details>
-              <summary>Parent</summary>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li>
-            <a>Item 3</a>
-          </li>
-        </ul>
-      </div>
+      <div className="navbar-center hidden lg:flex"></div>
       <div className="navbar-end gap-2 m-4 text-white">
         {user ? (
           <>
-            <img
-              className="ring-primary ring-offset-base-100 w-10 rounded-full ring ring-offset-2"
-              src={user.photoURL}
-              alt={user.displayName}
-            />
+            <div class="relative">
+              <div class="dropdown dropdown-end dropdown-hover">
+                <label tabindex="0">
+                  <div className="avatar online hover:cursor-pointer">
+                    <div className="w-10 rounded-full">
+                      <img src={user.photoURL} />
+                    </div>
+                  </div>
+                </label>
+
+                <ul
+                  tabindex="0"
+                  class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 text-black"
+                >
+                  <li>
+                    <a>Perfil</a>
+                  </li>
+                  <li>
+                    <a>Configuración</a>
+                  </li>
+                  <li>
+                    <button onClick={handleLogout}>Cerrar sesión</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
             {/* <p>Hola, {user.displayName}</p> */}
-            <button onClick={handleLogout}>Cerrar sesión</button>
           </>
         ) : (
           <button onClick={handleLogin}>Iniciar sesión con Google</button>
