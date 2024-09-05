@@ -1,9 +1,8 @@
-import React from "react";
 import {
-  HeartIcon,
-  ChatBubbleOvalLeftIcon,
-  PaperAirplaneIcon,
   BookmarkIcon,
+  ChatBubbleOvalLeftIcon,
+  HeartIcon,
+  PaperAirplaneIcon,
 } from "@heroicons/react/24/outline";
 
 function Post() {

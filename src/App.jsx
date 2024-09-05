@@ -6,6 +6,7 @@ import ForYou from "./pages/ForYou";
 import { useAuth } from "./context/AuthContext";
 
 function App() {
+  // eslint-disable-next-line react/prop-types
   const ProtectedRoute = ({ element }) => {
     const { user } = useAuth();
     return user ? element : <Navigate to="/foryou" />;

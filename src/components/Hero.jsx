@@ -1,6 +1,5 @@
-import React from "react";
-import NewPostImg from "../assets/newpostImg.png";
 import NoteImg from "../assets/firma (1).svg";
+import NewPostImg from "../assets/newpostImg.png";
 
 function Hero() {
   return (

@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
   const { user, loginWithGoogle, logout } = useAuth();
@@ -51,9 +50,9 @@ function Navbar() {
       <div className="navbar-end gap-2 m-4 text-white">
         {user ? (
           <>
-            <div class="relative">
-              <div class="dropdown dropdown-end dropdown-hover">
-                <label tabindex="0">
+            <div className="relative">
+              <div className="dropdown dropdown-end dropdown-hover">
+                <label tabIndex="0">
                   <div className="avatar online hover:cursor-pointer">
                     <div className="w-10 rounded-full">
                       <img src={user.photoURL} />
@@ -62,8 +61,8 @@ function Navbar() {
                 </label>
 
                 <ul
-                  tabindex="0"
-                  class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 text-black"
+                  tabIndex="0"
+                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 text-black"
                 >
                   <li>
                     <a>Perfil</a>

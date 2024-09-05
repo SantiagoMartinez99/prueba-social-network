@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { auth, provider, signInWithPopup, signOut } from "../firebase";
 
 const AuthContext = createContext();
