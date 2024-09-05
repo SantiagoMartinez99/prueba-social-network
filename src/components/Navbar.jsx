@@ -63,7 +63,7 @@ function Navbar() {
           </>
         ) : (
           <button
-            className="btn  bg-transparent shadow-none border-none text-4xl font-bold hover:bg-pink-500  text-white"
+            className="btn  bg-transparent shadow-none border-none text-2xl md:text-4xl font-bold hover:bg-pink-500  text-white"
             onClick={handleLogin}
           >
             Iniciar sesión
