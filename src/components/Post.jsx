@@ -1,129 +1,119 @@
-import { useState, useEffect } from "react";
-import {
-  collection,
-  getDocs,
-  doc,
-  updateDoc,
-  arrayUnion,
-  arrayRemove,
-} from "firebase/firestore";
-import { db } from "../firebase";
-import useAuthStore from "../store/storeAuth";
 import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { db } from "../firebase";
+import useAuthStore from "../store/storeAuth";
+import usePostStore from "../store/storePosts";
 
 function Posts() {
-  const [posts, setPosts] = useState([]);
-  const [commentText, setCommentText] = useState("");
+  const {
+    posts,
+    handleLikeClick,
+    handleAddComment,
+    commentText,
+    setCommentText,
+    fetchPosts
+  } = usePostStore();
+  // const [commentText, setCommentText] = useState("");
   const { user } = useAuthStore();
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const querySnapshot = await getDocs(collection(db, "posts"));
-      const postsArray = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-        likes: doc.data().likes || [],
-      }));
-      setPosts(postsArray);
-    };
-
     fetchPosts();
   }, []);
 
-  const addLikeToPost = async (postId, userId) => {
-    try {
-      const postRef = doc(db, "posts", postId);
+  // const addLikeToPost = async (postId, userId) => {
+  //   try {
+  //     const postRef = doc(db, "posts", postId);
 
-      // Actualiza el campo 'likes' añadiendo el ID del usuario
-      await updateDoc(postRef, {
-        likes: arrayUnion(userId),
-      });
-      console.log("Like added successfully!");
-    } catch (error) {
-      console.error("Error adding like:", error);
-    }
-  };
+  //     // Actualiza el campo 'likes' añadiendo el ID del usuario
+  //     await updateDoc(postRef, {
+  //       likes: arrayUnion(userId),
+  //     });
+  //     console.log("Like added successfully!");
+  //   } catch (error) {
+  //     console.error("Error adding like:", error);
+  //   }
+  // };
 
-  const removeLikeFromPost = async (postId, userId) => {
-    try {
-      const postRef = doc(db, "posts", postId);
+  // const removeLikeFromPost = async (postId, userId) => {
+  //   try {
+  //     const postRef = doc(db, "posts", postId);
 
-      // Actualiza el campo 'likes' eliminando el ID del usuario
-      await updateDoc(postRef, {
-        likes: arrayRemove(userId),
-      });
-      console.log("Like removed successfully!");
-    } catch (error) {
-      console.error("Error removing like:", error);
-    }
-  };
+  //     // Actualiza el campo 'likes' eliminando el ID del usuario
+  //     await updateDoc(postRef, {
+  //       likes: arrayRemove(userId),
+  //     });
+  //     console.log("Like removed successfully!");
+  //   } catch (error) {
+  //     console.error("Error removing like:", error);
+  //   }
+  // };
 
-  const handleLikeClick = async (postId, hasLiked) => {
-    if (loading) return;
+  // const handleLikeClick = async (postId, hasLiked) => {
+  //   if (loading) return;
 
-    setLoading(true);
-    if (hasLiked) {
-      await removeLikeFromPost(postId, user.uid);
-      setPosts((prevPosts) =>
-        prevPosts.map((post) =>
-          post.id === postId
-            ? {
-                ...post,
-                likes: post.likes.filter((uid) => uid !== user.uid),
-              }
-            : post
-        )
-      );
-    } else {
-      await addLikeToPost(postId, user.uid);
-      setPosts((prevPosts) =>
-        prevPosts.map((post) =>
-          post.id === postId
-            ? {
-                ...post,
-                likes: [...post.likes, user.uid],
-              }
-            : post
-        )
-      );
-    }
-    setLoading(false);
-  };
+  //   setLoading(true);
+  //   if (hasLiked) {
+  //     await removeLikeFromPost(postId, user.uid);
+  //     setPosts((prevPosts) =>
+  //       prevPosts.map((post) =>
+  //         post.id === postId
+  //           ? {
+  //               ...post,
+  //               likes: post.likes.filter((uid) => uid !== user.uid),
+  //             }
+  //           : post
+  //       )
+  //     );
+  //   } else {
+  //     await addLikeToPost(postId, user.uid);
+  //     setPosts((prevPosts) =>
+  //       prevPosts.map((post) =>
+  //         post.id === postId
+  //           ? {
+  //               ...post,
+  //               likes: [...post.likes, user.uid],
+  //             }
+  //           : post
+  //       )
+  //     );
+  //   }
+  //   setLoading(false);
+  // };
 
-  const handleAddComment = async (postId) => {
-    if (commentText.trim() === "") return;
+  // const handleAddComment = async (postId) => {
+  //   if (commentText.trim() === "") return;
 
-    await updateDoc(doc(db, "posts", postId), {
-      comments: arrayUnion({
-        userId: user.uid,
-        userName: user.displayName,
-        comment: commentText,
-        createdAt: new Date(),
-      }),
-    });
+  //   await updateDoc(doc(db, "posts", postId), {
+  //     comments: arrayUnion({
+  //       userId: user.uid,
+  //       userName: user.displayName,
+  //       comment: commentText,
+  //       createdAt: new Date(),
+  //     }),
+  //   });
 
-    setCommentText("");
-    setPosts((prevPosts) =>
-      prevPosts.map((post) =>
-        post.id === postId
-          ? {
-              ...post,
-              comments: [
-                ...post.comments,
-                {
-                  userId: user.uid,
-                  userName: user.displayName,
-                  comment: commentText,
-                  createdAt: new Date(),
-                },
-              ],
-            }
-          : post
-      )
-    );
-  };
+  //   setCommentText("");
+  //   setPosts((prevPosts) =>
+  //     prevPosts.map((post) =>
+  //       post.id === postId
+  //         ? {
+  //             ...post,
+  //             comments: [
+  //               ...post.comments,
+  //               {
+  //                 userId: user.uid,
+  //                 userName: user.displayName,
+  //                 comment: commentText,
+  //                 createdAt: new Date(),
+  //               },
+  //             ],
+  //           }
+  //         : post
+  //     )
+  //   );
+  // };
 
   return (
     <div>

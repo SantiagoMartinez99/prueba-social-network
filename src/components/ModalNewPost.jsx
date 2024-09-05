@@ -24,7 +24,7 @@ function ModalNewPost({ isOpen, setIsOpen }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { user } = useAuthStore();
-  const [description, setDescription] = useState(""); // Nueva variable para la descripción
+  const [description, setDescription] = useState(""); 
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
