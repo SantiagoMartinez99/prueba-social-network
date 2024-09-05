@@ -24,7 +24,7 @@ function Navbar() {
   };
 
   return (
-    <div className="navbar animated-background bg-gradient-to-r from-indigo-400 to-cyan-400 absolute top-0 font-inter">
+    <nav className="navbar animated-background bg-gradient-to-r from-indigo-400 to-cyan-400 fixed top-0 font-inter z-50 transition-transform duration-200 ease-in-out">
       <div className="navbar-start">
         <a className="btn btn-ghost text-3xl text-white">PhotoU</a>
       </div>
@@ -36,7 +36,7 @@ function Navbar() {
               <div className="dropdown dropdown-end dropdown-hover">
                 <label tabIndex="0">
                   <div className="avatar online hover:cursor-pointer">
-                    <div className="w-10 rounded-full">
+                    <div className="w-16 rounded-full">
                       <img src={user.photoURL} />
                     </div>
                   </div>
@@ -58,8 +58,6 @@ function Navbar() {
                 </ul>
               </div>
             </div>
-
-            {/* <p>Hola, {user.displayName}</p> */}
           </>
         ) : (
           <button
@@ -70,7 +68,7 @@ function Navbar() {
           </button>
         )}
       </div>
-    </div>
+    </nav>
   );
 }
 

@@ -4,7 +4,7 @@ import NewPostImg from "../assets/newpostImg.png";
 function Hero() {
   return (
     <div className="hero animated-background bg-gradient-to-r from-indigo-400 to-cyan-400 min-h-screen pt-40 lg:pt-10 font-inter">
-      <div className="hero-content flex-col lg:flex-row-reverse justify-center items-center lg:items-start">
+      <div className="hero-content flex-col lg:flex-row-reverse justify-center items-center ">
         <div className="bg-white relative lg:translate-x-24 w-full lg:w-1/2 flex justify-center lg:block">
           <img
             src="https://i.pinimg.com/564x/a1/40/37/a14037d51cb82beea0799e775332e6d1.jpg"

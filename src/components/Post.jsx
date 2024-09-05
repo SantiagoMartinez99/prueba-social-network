@@ -7,18 +7,20 @@ import {
   arrayUnion,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { useAuth } from "../context/AuthContext"; // Importamos el contexto de autenticación
+import { useAuth } from "../context/AuthContext";
+import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
+import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
 
 function PostsList() {
   const [posts, setPosts] = useState([]);
-  const [commentText, setCommentText] = useState(""); // Almacena el comentario actual
-  const { user } = useAuth(); // Obtener el usuario autenticado
+  const [commentText, setCommentText] = useState("");
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchPosts = async () => {
       const querySnapshot = await getDocs(collection(db, "posts"));
       const postsArray = querySnapshot.docs.map((doc) => ({
-        id: doc.id, // Incluimos el id del post para manejar los comentarios
+        id: doc.id,
         ...doc.data(),
       }));
       setPosts(postsArray);
@@ -27,7 +29,13 @@ function PostsList() {
     fetchPosts();
   }, []);
 
-  // Función para agregar un comentario
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(123);
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+    setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
+  };
+
   const handleAddComment = async (postId) => {
     if (commentText.trim() === "") return;
 
@@ -40,7 +48,6 @@ function PostsList() {
       }),
     });
 
-    // Limpiamos el texto del comentario
     setCommentText("");
   };
 
@@ -67,9 +74,6 @@ function PostsList() {
                 <p className="text-sm font-semibold">
                   {post.userName || "usuario"}
                 </p>
-                <p className="text-xs text-base-content text-opacity-60">
-                  Ciudad, País
-                </p>
               </div>
             </div>
           </div>
@@ -82,22 +86,25 @@ function PostsList() {
           </figure>
           <div className="card-body p-4 pt-2">
             <div className="flex justify-between items-center w-full">
-              <div className="flex gap-4">{/* Botones de interacción */}</div>
-              <button className="btn btn-ghost btn-square btn-sm">
-                {/* Botón de marcador */}
-              </button>
+              <div className="flex gap-4">
+                <button
+                  className="btn btn-ghost btn-square btn-sm group"
+                  onClick={handleLike}
+                  aria-label={isLiked ? "Quitar me gusta" : "Me gusta"}
+                >
+                  {isLiked ? (
+                    <HeartSolid className="h-6 w-6 text-red-500 transform group-active:scale-125 transition-transform duration-200" />
+                  ) : (
+                    <HeartOutline className="h-6 w-6 group-hover:text-red-500 transform group-active:scale-125 transition-transform duration-200" />
+                  )}
+                </button>
+              </div>
+              <p className="font-semibold ">{post.likes} Me gusta</p>
             </div>
             <div className="text-sm space-y-1">
-              <p className="font-semibold">{post.likes} Me gusta</p>
-              <p>
-                <span className="font-semibold">{post.userName}</span>{" "}
-                {post.description}
-              </p>
-            </div>
-
-            {/* Sección de comentarios */}
-            <div className="comments-section">
-              <h4 className="font-semibold text-sm mt-4">Comentarios</h4>
+              <span className="font-semibold">{post.userName}:</span>
+              {post.description}
+              <h4 className="text-gray-600 text-sm ">Comentarios</h4>
               {post.comments && post.comments.length > 0 ? (
                 post.comments.map((comment, idx) => (
                   <div key={idx} className="mt-2 text-sm">
@@ -110,24 +117,24 @@ function PostsList() {
                   No hay comentarios todavía.
                 </p>
               )}
-
-              {/* Input para agregar nuevo comentario */}
               <div className="mt-4">
                 <input
                   type="text"
                   placeholder="Escribe un comentario..."
                   value={commentText}
                   onChange={(e) => setCommentText(e.target.value)}
-                  className="input input-bordered w-full mb-2"
+                  className="input input-bordered w-full mb-4 h-9"
                 />
                 <button
-                  onClick={() => handleAddComment(post.id)} // Llama a la función de agregar comentario
-                  className="btn btn-primary btn-sm"
+                  onClick={() => handleAddComment(post.id)}
+                  className="btn btn-primary btn-sm text-sm font-bold text-white bg-gradient-to-r from-indigo-400 to-cyan-400 border-none"
                 >
                   Comentar
                 </button>
               </div>
             </div>
+
+            <div className="comments-section"></div>
           </div>
         </div>
       ))}
