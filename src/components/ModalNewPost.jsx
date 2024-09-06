@@ -76,14 +76,14 @@ function ModalNewPost({ isOpen, setIsOpen }) {
                       <p className="text-xs font-bold">{user.displayName}</p>
                     </div>
                     <textarea
-                      className="shadow-md w-full"
+                      className="shadow-md w-full h-1/2"
                       placeholder="Ingresa una descripción"
                       value={description}
                       onChange={handleDescriptionChange}
                     ></textarea>
                     <button
                       onClick={handleUpload}
-                      className="mt-4 bg-green-500 text-white px-4 py-2 rounded-lg absolute bottom-0 right-10 bottom-10"
+                      className="mt-4 font-bold text-white bg-gradient-to-r from-indigo-400 to-cyan-400 px-4 py-2 rounded-lg absolute right-10 bottom-10"
                     >
                       Subir
                     </button>

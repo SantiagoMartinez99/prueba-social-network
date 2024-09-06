@@ -6,7 +6,7 @@ import { db } from "../firebase";
 import useAuthStore from "../store/storeAuth";
 import store from "../store/storePosts";
 
-const {usePostStore } = store;
+const { usePostStore } = store;
 
 function Posts() {
   const {
@@ -96,17 +96,18 @@ function Posts() {
                     No hay comentarios todavía.
                   </p>
                 )}
-                <div className="mt-4">
+                <div className="relative mt-4">
                   <input
                     type="text"
                     placeholder="Escribe un comentario..."
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
-                    className="input input-bordered w-full mb-4 h-9"
+                    className="input input-bordered w-full mb-4 h-9 pr-16" // Agrega padding a la derecha para el botón
                   />
                   <button
                     onClick={() => handleAddComment(post.id)}
-                    className="btn btn-primary btn-sm text-sm font-bold text-white bg-gradient-to-r from-indigo-400 to-cyan-400 border-none"
+                    className="absolute right-0 top-0 h-9 px-4 text-sm font-bold text-white bg-gradient-to-r from-indigo-400 to-cyan-400 border-none rounded-r-md
+                    hover:cursor-pointer"
                   >
                     Comentar
                   </button>

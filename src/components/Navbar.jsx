@@ -24,10 +24,10 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar animated-background bg-gradient-to-r from-indigo-400 to-cyan-400 fixed top-0 font-inter z-50 transition-transform duration-200 ease-in-out">
+    <nav className="navbar animated-background  fixed top-0 font-inter z-50 transition-transform duration-200 ease-in-out">
       <div className="navbar-start">
         <a
-          className="btn btn-ghost text-3xl text-white"
+          className="btn btn-ghost text-3xl text-blue-700 "
           onClick={() => navigate("/")}
         >
           PhotoU
@@ -66,7 +66,7 @@ function Navbar() {
           </>
         ) : (
           <button
-            className="btn bg-transparent shadow-none border-none text-2xl md:text-4xl font-bold hover:bg-pink-500 text-white"
+            className="btn bg-transparent shadow-none border-none text-2xl md:text-4xl font-bold hover:bg-blue-800 text-white"
             onClick={handleLogin}
           >
             Iniciar sesión
