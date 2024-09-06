@@ -8,89 +8,39 @@ import { collection, addDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import store from "../store/storePosts";
 
-const dataURLToBlob = (dataURL) => {
-  const [header, data] = dataURL.split(",");
-  const mime = header.match(/:(.*?);/)[1];
-  const binary = atob(data);
-  let array = [];
-  for (let i = 0; i < binary.length; i++) {
-    array.push(binary.charCodeAt(i));
-  }
-  return new Blob([new Uint8Array(array)], { type: mime });
-};
+const { useCreatePostStore } = store;
 
 function ModalNewPost({ isOpen, setIsOpen }) {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const {
+    selectedImage,
+    description,
+    isFilterOpen,
+    setSelectedImage,
+    setDescription,
+    setIsFilterOpen,
+    handleImageChange,
+    handleUploadClick,
+  } = useCreatePostStore();
   const { user } = useAuthStore();
-  const [description, setDescription] = useState(""); 
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage(reader.result);
-        setIsFilterOpen(true);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const uploadImageToFirestore = async (
-    file,
-    userId,
-    userName,
-    userPhotoURL,
-    description
-  ) => {
-    if (!file) {
-      console.error("No file selected");
+  const handleUpload = () => {
+    if (!user) {
+      toast.error("Debes iniciar sesión para crear un post");
       return;
     }
-
-    if (!file.name) {
-      console.error("File name is undefined");
-      return;
-    }
-
-    try {
-      const uniqueFileName = `${userId}-${uuidv4()}`;
-      const storageRef = ref(storage, `uploads/${userId}/${uniqueFileName}`);
-
-      const snapshot = await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(storageRef);
-
-      await addDoc(collection(db, "posts"), {
-        userId: userId,
-        userName: userName,
-        userPhotoURL: userPhotoURL,
-        imageURL: downloadURL,
-        description: description || "",
-        likes: 0,
-        comments: [],
-        uploadedAt: new Date(),
-      });
-
-      setIsOpen(false);
-      toast.success("Post creado con éxito");
-    } catch (error) {
-      toast.error("Error al crear el post");
-    }
+    handleUploadClick();
   };
-  const handleUploadClick = () => {
-    if (selectedImage) {
-      const blob = dataURLToBlob(selectedImage);
-      const file = new File([blob], "uploaded_image.jpg", { type: blob.type });
-      uploadImageToFirestore(
-        file,
-        user.uid,
-        user.displayName,
-        user.photoURL,
-        "Tu descripción aquí"
-      );
-    }
+
+  const handleClose = () => {
+    setSelectedImage(null);
+    setDescription("");
+    setIsFilterOpen(false);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
   };
 
   return (
@@ -101,7 +51,7 @@ function ModalNewPost({ isOpen, setIsOpen }) {
             <div className="bg-white rounded-lg shadow-lg max-w-xl mx-auto p-6 relative">
               <button
                 className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
-                onClick={() => setIsOpen(false)}
+                onClick={handleClose}
               >
                 &times;
               </button>
@@ -132,9 +82,11 @@ function ModalNewPost({ isOpen, setIsOpen }) {
                     <textarea
                       className="shadow-md w-full"
                       placeholder="Ingresa una descripción"
+                      value={description}
+                      onChange={handleDescriptionChange}
                     ></textarea>
                     <button
-                      onClick={handleUploadClick}
+                      onClick={handleUpload}
                       className="mt-4 bg-green-500 text-white px-4 py-2 rounded-lg absolute bottom-0 right-10 bottom-10"
                     >
                       Subir

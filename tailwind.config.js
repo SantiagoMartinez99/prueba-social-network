@@ -10,6 +10,6 @@ export default {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["light"], // Habilita solo el tema 'light'
+    themes: ["light"], 
   },
 };

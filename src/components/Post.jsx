@@ -4,7 +4,9 @@ import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import useAuthStore from "../store/storeAuth";
-import usePostStore from "../store/storePosts";
+import store from "../store/storePosts";
+
+const {usePostStore } = store;
 
 function Posts() {
   const {
@@ -13,107 +15,13 @@ function Posts() {
     handleAddComment,
     commentText,
     setCommentText,
-    fetchPosts
+    fetchPosts,
   } = usePostStore();
-  // const [commentText, setCommentText] = useState("");
   const { user } = useAuthStore();
 
   useEffect(() => {
     fetchPosts();
   }, []);
-
-  // const addLikeToPost = async (postId, userId) => {
-  //   try {
-  //     const postRef = doc(db, "posts", postId);
-
-  //     // Actualiza el campo 'likes' añadiendo el ID del usuario
-  //     await updateDoc(postRef, {
-  //       likes: arrayUnion(userId),
-  //     });
-  //     console.log("Like added successfully!");
-  //   } catch (error) {
-  //     console.error("Error adding like:", error);
-  //   }
-  // };
-
-  // const removeLikeFromPost = async (postId, userId) => {
-  //   try {
-  //     const postRef = doc(db, "posts", postId);
-
-  //     // Actualiza el campo 'likes' eliminando el ID del usuario
-  //     await updateDoc(postRef, {
-  //       likes: arrayRemove(userId),
-  //     });
-  //     console.log("Like removed successfully!");
-  //   } catch (error) {
-  //     console.error("Error removing like:", error);
-  //   }
-  // };
-
-  // const handleLikeClick = async (postId, hasLiked) => {
-  //   if (loading) return;
-
-  //   setLoading(true);
-  //   if (hasLiked) {
-  //     await removeLikeFromPost(postId, user.uid);
-  //     setPosts((prevPosts) =>
-  //       prevPosts.map((post) =>
-  //         post.id === postId
-  //           ? {
-  //               ...post,
-  //               likes: post.likes.filter((uid) => uid !== user.uid),
-  //             }
-  //           : post
-  //       )
-  //     );
-  //   } else {
-  //     await addLikeToPost(postId, user.uid);
-  //     setPosts((prevPosts) =>
-  //       prevPosts.map((post) =>
-  //         post.id === postId
-  //           ? {
-  //               ...post,
-  //               likes: [...post.likes, user.uid],
-  //             }
-  //           : post
-  //       )
-  //     );
-  //   }
-  //   setLoading(false);
-  // };
-
-  // const handleAddComment = async (postId) => {
-  //   if (commentText.trim() === "") return;
-
-  //   await updateDoc(doc(db, "posts", postId), {
-  //     comments: arrayUnion({
-  //       userId: user.uid,
-  //       userName: user.displayName,
-  //       comment: commentText,
-  //       createdAt: new Date(),
-  //     }),
-  //   });
-
-  //   setCommentText("");
-  //   setPosts((prevPosts) =>
-  //     prevPosts.map((post) =>
-  //       post.id === postId
-  //         ? {
-  //             ...post,
-  //             comments: [
-  //               ...post.comments,
-  //               {
-  //                 userId: user.uid,
-  //                 userName: user.displayName,
-  //                 comment: commentText,
-  //                 createdAt: new Date(),
-  //               },
-  //             ],
-  //           }
-  //         : post
-  //     )
-  //   );
-  // };
 
   return (
     <div>

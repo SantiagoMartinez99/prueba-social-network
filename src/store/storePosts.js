@@ -1,3 +1,4 @@
+import { create } from "zustand";
 import {
   doc,
   updateDoc,
@@ -5,9 +6,14 @@ import {
   arrayRemove,
   getDocs,
   collection,
+  setDoc,
+  addDoc,
 } from "firebase/firestore";
-import { db } from "../firebase";
-import { create } from "zustand";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { db, storage } from "../firebase";
+import { v4 as uuidv4 } from "uuid";
+import { toast } from "react-toastify";
+import { dataURLToBlob } from "../utils";
 import useAuthStore from "./storeAuth";
 
 const usePostStore = create((set, get) => ({
@@ -121,4 +127,66 @@ const usePostStore = create((set, get) => ({
   },
 }));
 
-export default usePostStore;
+const useCreatePostStore = create((set, get) => ({
+  selectedImage: null,
+  description: "",
+  isFilterOpen: false,
+  setSelectedImage: (image) => set({ selectedImage: image }),
+  setDescription: (description) => set({ description }),
+  setIsFilterOpen: (isOpen) => set({ isFilterOpen: isOpen }),
+
+  handleImageChange: (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        console.log("Imagen seleccionada:", reader.result);
+        set({ selectedImage: reader.result, isFilterOpen: true });
+      };
+      reader.readAsDataURL(file);
+    }
+  },
+
+  uploadImageToFirestore: async () => {
+    const { user } = useAuthStore.getState();
+    const { selectedImage, description } = get();
+
+    if (!selectedImage) {
+      toast.error("No hay imagen seleccionada");
+      return;
+    }
+
+    try {
+      const blob = dataURLToBlob(selectedImage);
+      const file = new File([blob], "uploaded_image.jpg", { type: blob.type });
+      const uniqueFileName = `${user.uid}-${uuidv4()}`;
+      const storageRef = ref(storage, `uploads/${user.uid}/${uniqueFileName}`);
+
+      const snapshot = await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(storageRef);
+
+      await addDoc(collection(db, "posts"), {
+        userId: user.uid,
+        userName: user.displayName,
+        userPhotoURL: user.photoURL,
+        imageURL: downloadURL,
+        description: description || "",
+        likes: 0,
+        comments: [],
+        uploadedAt: new Date(),
+      });
+
+      set({ selectedImage: null, description: "" });
+      toast.success("Post creado con éxito");
+    } catch (error) {
+      toast.error("Error al crear el post");
+      console.error("Error uploading image:", error);
+    }
+  },
+
+  handleUploadClick: () => {
+    get().uploadImageToFirestore();
+  },
+}));
+
+export default { usePostStore, useCreatePostStore };
