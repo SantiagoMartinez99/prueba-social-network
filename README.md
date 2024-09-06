@@ -43,8 +43,18 @@ https://visionary-monstera-2221a7.netlify.app
     ```bash
     npm install
 
-4. **Configura Firebase** Configura en un .env la información de tu proyecto en firebase 
+4. **Configura Firebase**
+- Crea tu app en firebase 
+- Configura en un .env la información de tu proyecto en firebase
+- Crea los servicios de Autenticación, Firestore Cloud y Storage
+- **IMPORTANTE:** En caso de que tengas problemas de CORS al momento de realizar publicaciones ve al cloud shell de google de tu proyecto y ejecuta
 
-5. **Ejecutar la Aplicación**
+   
+   
+   
+   ```shell
+   gsutil cors set cors.json gs://<your-bucket-name>
+
+6. **Ejecutar la Aplicación**
 - ```bash
     npm run dev
