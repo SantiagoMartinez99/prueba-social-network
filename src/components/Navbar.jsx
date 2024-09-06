@@ -40,11 +40,13 @@ function Navbar() {
           <>
             <div className="relative">
               <div className="dropdown dropdown-end dropdown-hover">
-                <div className="avatar online hover:cursor-pointer">
-                  <div className="w-16 rounded-full">
-                    <img src={user.photoURL} alt="User Avatar" />
+                <label tabIndex="0">
+                  <div className="avatar online hover:cursor-pointer">
+                    <div className="w-16 rounded-full">
+                      <img src={user.photoURL} alt="User Avatar" />
+                    </div>
                   </div>
-                </div>
+                </label>
                 <ul
                   tabIndex="0"
                   className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 text-black"
