@@ -1,14 +1,8 @@
-import { doc, setDoc } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { useState } from "react";
-import useAuthStore from "../store/storeAuth";
-import { db, storage } from "../firebase";
-import ImageFilter from "./ImageFilter";
-import { collection, addDoc } from "firebase/firestore";
-import { v4 as uuidv4 } from "uuid";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useAuthStore from "../store/storeAuth";
 import store from "../store/storePosts";
+import ImageFilter from "./ImageFilter";
 
 const { useCreatePostStore } = store;
 

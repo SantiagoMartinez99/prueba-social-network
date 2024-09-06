@@ -54,7 +54,7 @@ function Navbar() {
                     <a onClick={() => navigate("/foryou")}>Para mi</a>
                   </li>
                   <li>
-                    <a>Perfil</a>
+                    <a onClick={() => navigate("/profile")}>Perfil</a>
                   </li>
 
                   <li>

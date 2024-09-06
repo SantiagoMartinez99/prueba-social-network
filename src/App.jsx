@@ -5,6 +5,7 @@ import ForYou from "./pages/ForYou";
 import useAuthStore from "./store/storeAuth";
 import { useEffect } from "react";
 import { auth } from "./firebase";
+import Profile from "./pages/Profile";
 
 function App() {
   const { user, setUser } = useAuthStore();
@@ -18,7 +19,7 @@ function App() {
   }, [setUser]);
 
   const ProtectedRoute = ({ element }) => {
-    return user ? element : <Navigate to="/foryou" />;
+    return user ? element : <Navigate to="/" />;
   };
 
   return (
@@ -30,6 +31,11 @@ function App() {
           path="/foryou"
           element={<ProtectedRoute element={<ForYou />} />}
         />
+        <Route
+          path="/profile"
+          element={<ProtectedRoute element={<Profile />} />}
+        />
+
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
