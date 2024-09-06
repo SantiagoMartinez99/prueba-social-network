@@ -1,24 +1,24 @@
-import HeroImg from "../assets/HeroImg0.jpg";
-import HeroImg1 from "../assets/HeroImg1.jpg";
-import HeroImg2 from "../assets/HeroImg2.jpg";
-import HeroImg3 from "../assets/HeroImg3.jpg";
-import HeroImg4 from "../assets/HeroImg4.jpg";
-import HeroImg5 from "../assets/HeroImg5.jpg";
-import HeroImg6 from "../assets/HeroImg6.jpg";
-import HeroImg7 from "../assets/HeroImg7.jpg";
-import HeroImg8 from "../assets/HeroImg8.jpg";
 import { Link } from "react-router-dom";
+import HeroImg8 from "../assets/HeroImg0.jpg";
+import HeroImg9 from "../assets/HeroImg1.jpg";
+import HeroImg7 from "../assets/HeroImg2.jpg";
+import HeroImg6 from "../assets/HeroImg3.jpg";
+import HeroImg5 from "../assets/HeroImg4.jpg";
+import HeroImg4 from "../assets/HeroImg5.jpg";
+import HeroImg3 from "../assets/HeroImg6.jpg";
+import HeroImg2 from "../assets/HeroImg7.jpg";
+import HeroImg1 from "../assets/HeroImg8.jpg";
 
 const images = [
-  HeroImg8,
-  HeroImg7,
-  HeroImg6,
-  HeroImg5,
-  HeroImg4,
-  HeroImg3,
-  HeroImg2,
-  HeroImg,
   HeroImg1,
+  HeroImg2,
+  HeroImg3,
+  HeroImg4,
+  HeroImg5,
+  HeroImg6,
+  HeroImg7,
+  HeroImg8,
+  HeroImg9,
 ];
 
 function Hero() {

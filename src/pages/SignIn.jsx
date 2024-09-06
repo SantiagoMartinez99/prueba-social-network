@@ -2,13 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
-import { auth, storage } from "../firebase";
-import { updateProfile } from "firebase/auth";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import useAuthStore from "../store/storeAuth";
 
 function SignIn() {
   const [email, setEmail] = useState("");
@@ -18,34 +12,16 @@ function SignIn() {
   const [isRegistering, setIsRegistering] = useState(false);
   const navigate = useNavigate();
 
+  const { registerWithEmail, loginWithEmail } = useAuthStore();
+
   const handleAuth = async () => {
     try {
       if (isRegistering) {
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-
-        let imageUrl = "";
-        if (image) {
-          const imageRef = ref(
-            storage,
-            `profileImages/${userCredential.user.uid}`
-          );
-          await uploadBytes(imageRef, image);
-          imageUrl = await getDownloadURL(imageRef);
-        }
-
-        await updateProfile(userCredential.user, {
-          displayName: name,
-          photoURL: imageUrl,
-        });
-
+        await registerWithEmail(email, password, name, image);
         toast.success("Registro exitoso. Ahora puedes iniciar sesión.");
         setIsRegistering(false);
       } else {
-        await signInWithEmailAndPassword(auth, email, password);
+        await loginWithEmail(email, password);
         toast.success("Inicio de sesión exitoso");
         navigate("/home");
       }

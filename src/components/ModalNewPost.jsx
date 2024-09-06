@@ -60,7 +60,7 @@ function ModalNewPost({ isOpen, setIsOpen }) {
                 capture="environment"
                 className="mb-4"
               />
-              {selectedImage && (
+              {isFilterOpen && (
                 <div className="flex">
                   <div className="w-1/2">
                     <ImageFilter imageSrc={selectedImage} />

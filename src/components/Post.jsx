@@ -1,8 +1,6 @@
 import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
-import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { db } from "../firebase";
+import { useEffect } from "react";
 import useAuthStore from "../store/storeAuth";
 import store from "../store/storePosts";
 
