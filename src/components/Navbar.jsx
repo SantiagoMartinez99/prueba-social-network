@@ -55,7 +55,7 @@ function Navbar() {
                     <Link to="/foryou">Para ti</Link>
                   </li>
                   <li>
-                    <Link to="/Profile">Perfil</Link>
+                    <Link to="/profile">Perfil</Link>
                   </li>
 
                   <li>
@@ -66,12 +66,11 @@ function Navbar() {
             </div>
           </>
         ) : (
-          <button
-            className="btn bg-transparent shadow-none border-none text-2xl md:text-4xl font-bold hover:bg-blue-800 text-white"
-            onClick={handleLogin}
-          >
-            Iniciar sesión
-          </button>
+          <Link to="/signin">
+            <button className="btn btn-primary bg-gradient-to-l from-indigo-400 to-cyan-400 text-white text-xl border-none">
+              Iniciar Sesión
+            </button>
+          </Link>
         )}
       </div>
     </nav>

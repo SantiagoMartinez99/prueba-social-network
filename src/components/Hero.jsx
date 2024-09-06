@@ -60,11 +60,6 @@ function Hero() {
             comentarios. ¡Haz que cada instante cuente y mantén vivas tus
             conexiones!
           </p>
-          <Link to="/signin">
-            <button className="btn btn-primary bg-gradient-to-l from-indigo-400 to-cyan-400 text-white text-xl border-none">
-              Únete ahora
-            </button>
-          </Link>
         </div>
       </div>
     </div>
