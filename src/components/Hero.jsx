@@ -7,6 +7,7 @@ import HeroImg5 from "../assets/HeroImg5.jpg";
 import HeroImg6 from "../assets/HeroImg6.jpg";
 import HeroImg7 from "../assets/HeroImg7.jpg";
 import HeroImg8 from "../assets/HeroImg8.jpg";
+import { Link } from "react-router-dom";
 
 const images = [
   HeroImg8,
@@ -59,9 +60,11 @@ function Hero() {
             comentarios. ¡Haz que cada instante cuente y mantén vivas tus
             conexiones!
           </p>
-          <button className="btn btn-primary bg-gradient-to-l from-indigo-400 to-cyan-400 text-white text-xl border-none">
-            Únete ahora
-          </button>
+          <Link to="/signin">
+            <button className="btn btn-primary bg-gradient-to-l from-indigo-400 to-cyan-400 text-white text-xl border-none">
+              Únete ahora
+            </button>
+          </Link>
         </div>
       </div>
     </div>

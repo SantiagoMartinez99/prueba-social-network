@@ -1,0 +1,128 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { auth, storage } from "../firebase";
+import { updateProfile } from "firebase/auth"; // Importa la función para actualizar el perfil
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Importa funciones para manejar el almacenamiento
+
+function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState(""); // Nuevo estado para el nombre
+  const [image, setImage] = useState(null); // Nuevo estado para la imagen
+  const [isRegistering, setIsRegistering] = useState(false);
+  const navigate = useNavigate();
+
+  const handleAuth = async () => {
+    try {
+      if (isRegistering) {
+        // Registra al usuario
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+        // Subir la imagen a Firebase Storage
+        let imageUrl = "";
+        if (image) {
+          const imageRef = ref(storage, `profileImages/${userCredential.user.uid}`);
+          await uploadBytes(imageRef, image);
+          imageUrl = await getDownloadURL(imageRef);
+        }
+
+        // Actualiza el perfil del usuario con el nombre y la imagen
+        await updateProfile(userCredential.user, { displayName: name, photoURL: imageUrl });
+
+        toast.success("Registro exitoso. Ahora puedes iniciar sesión.");
+        setIsRegistering(false);
+      } else {
+        await signInWithEmailAndPassword(auth, email, password);
+        toast.success("Inicio de sesión exitoso");
+        navigate("/home");
+      }
+    } catch (error) {
+      toast.error("Error al procesar la solicitud. Verifica tus credenciales.");
+    }
+  };
+
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-l from-indigo-400 to-cyan-400">
+      <div className="bg-white rounded-lg shadow-lg max-w-md mx-auto p-6">
+        <h2 className="text-2xl font-semibold mb-6 text-center">
+          {isRegistering ? "Registrarse" : "Iniciar sesión"}
+        </h2>
+        {isRegistering && (
+          <>
+            <input
+              type="text"
+              placeholder="Nombre completo"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="mb-4 w-full p-2 border border-gray-300 rounded"
+            />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="mb-4 w-full p-2 border border-gray-300 rounded"
+            />
+          </>
+        )}
+        <input
+          type="email"
+          placeholder="Correo electrónico"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="mb-4 w-full p-2 border border-gray-300 rounded"
+        />
+        <input
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="mb-6 w-full p-2 border border-gray-300 rounded"
+        />
+        <button
+          onClick={handleAuth}
+          className="w-full font-bold text-white bg-gradient-to-r from-indigo-400 to-cyan-400 px-4 py-2 rounded-lg"
+        >
+          {isRegistering ? "Registrarse" : "Iniciar sesión"}
+        </button>
+        <p className="mt-4 text-center">
+          {isRegistering ? (
+            <>
+              ¿Ya tienes una cuenta?{" "}
+              <button
+                onClick={() => setIsRegistering(false)}
+                className="text-blue-500 underline font-bold"
+              >
+                Inicia sesión aquí
+              </button>
+            </>
+          ) : (
+            <>
+              ¿No tienes una cuenta?{" "}
+              <button
+                onClick={() => setIsRegistering(true)}
+                className="text-blue-500 underline font-bold"
+              >
+                Regístrate aquí
+              </button>
+            </>
+          )}
+        </p>
+      </div>
+      <ToastContainer />
+    </div>
+  );
+}
+
+export default SignIn;

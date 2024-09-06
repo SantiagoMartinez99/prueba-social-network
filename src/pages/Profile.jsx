@@ -55,10 +55,6 @@ function Profile() {
                   </span>
                   <p className="text-sm text-gray-500">Posts</p>
                 </div>
-                <div className="text-center">
-                  <span className="text-2xl font-bold text-gray-900">304</span>
-                  <p className="text-sm text-gray-500">Likes</p>
-                </div>
               </div>
             </div>
           </div>
