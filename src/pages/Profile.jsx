@@ -36,16 +36,6 @@ function Profile() {
     fetchUserPosts();
   }, [user, setPosts]);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-l from-indigo-400 to-cyan-400">
-        <div className="text-center text-white text-2xl font-bold">
-          Cargando posts...
-        </div>
-      </div>
-    );
-  }
-
   return loading ? (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-l from-indigo-400 to-cyan-400">
       <div className="text-center text-white text-2xl font-bold">
