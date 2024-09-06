@@ -57,7 +57,6 @@ function ModalNewPost({ isOpen, setIsOpen }) {
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
-                capture="environment"
                 className="mb-4"
               />
               {isFilterOpen && (
