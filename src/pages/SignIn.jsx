@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify"; // Asegúrate de importar toast aquí
 import "react-toastify/dist/ReactToastify.css";
 import useAuthStore from "../store/storeAuth";
 import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
@@ -30,8 +30,11 @@ function SignIn() {
         setIsRegistering(false);
       } else {
         await loginWithEmail(email, password);
+        toast.success("Inicio de sesión exitoso");
+        navigate("/home");
       }
     } catch (error) {
+      console.error("Error en el proceso de autenticación:", error);
       toast.error("Error al procesar la solicitud. Verifica tus credenciales.");
     }
   };
