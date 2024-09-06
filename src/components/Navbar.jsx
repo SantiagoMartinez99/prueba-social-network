@@ -55,7 +55,7 @@ function Navbar() {
                     <Link to="/foryou">Para ti</Link>
                   </li>
                   <li>
-                    <Link to="/Profile">Para ti</Link>
+                    <Link to="/Profile">Perfil</Link>
                   </li>
 
                   <li>
