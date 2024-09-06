@@ -27,7 +27,7 @@ function Navbar() {
     <nav className="navbar animated-background  fixed top-0 font-inter z-50 transition-transform duration-200 ease-in-out">
       <div className="navbar-start">
         <a
-          className="btn btn-ghost text-3xl text-blue-700 "
+          className="btn btn-ghost text-3xl text-cyan-300 font-bold"
           onClick={() => navigate("/")}
         >
           PhotoU
@@ -51,7 +51,7 @@ function Navbar() {
                   className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 text-black"
                 >
                   <li>
-                    <a onClick={() => navigate("/foryou")}>Para mi</a>
+                    <a onClick={() => navigate("/foryou")}>Para ti</a>
                   </li>
                   <li>
                     <a onClick={() => navigate("/profile")}>Perfil</a>

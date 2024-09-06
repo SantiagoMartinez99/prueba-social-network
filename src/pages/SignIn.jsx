@@ -7,33 +7,40 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth, storage } from "../firebase";
-import { updateProfile } from "firebase/auth"; // Importa la función para actualizar el perfil
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Importa funciones para manejar el almacenamiento
+import { updateProfile } from "firebase/auth";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState(""); // Nuevo estado para el nombre
-  const [image, setImage] = useState(null); // Nuevo estado para la imagen
+  const [name, setName] = useState("");
+  const [image, setImage] = useState(null);
   const [isRegistering, setIsRegistering] = useState(false);
   const navigate = useNavigate();
 
   const handleAuth = async () => {
     try {
       if (isRegistering) {
-        // Registra al usuario
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
 
-        // Subir la imagen a Firebase Storage
         let imageUrl = "";
         if (image) {
-          const imageRef = ref(storage, `profileImages/${userCredential.user.uid}`);
+          const imageRef = ref(
+            storage,
+            `profileImages/${userCredential.user.uid}`
+          );
           await uploadBytes(imageRef, image);
           imageUrl = await getDownloadURL(imageRef);
         }
 
-        // Actualiza el perfil del usuario con el nombre y la imagen
-        await updateProfile(userCredential.user, { displayName: name, photoURL: imageUrl });
+        await updateProfile(userCredential.user, {
+          displayName: name,
+          photoURL: imageUrl,
+        });
 
         toast.success("Registro exitoso. Ahora puedes iniciar sesión.");
         setIsRegistering(false);
