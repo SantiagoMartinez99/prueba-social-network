@@ -134,7 +134,6 @@ const useCreatePostStore = create((set, get) => ({
   setSelectedImage: (image) => set({ selectedImage: image }),
   setDescription: (description) => set({ description }),
   setIsFilterOpen: (isOpen) => set({ isFilterOpen: isOpen }),
-
   handleImageChange: (event) => {
     const file = event.target.files[0];
     if (file) {

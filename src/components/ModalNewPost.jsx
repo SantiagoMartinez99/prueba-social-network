@@ -31,12 +31,14 @@ function ModalNewPost({ isOpen, setIsOpen }) {
       return;
     }
     handleUploadClick();
+    handleClose();
   };
 
   const handleClose = () => {
     setSelectedImage(null);
     setDescription("");
     setIsFilterOpen(false);
+    setIsOpen(false);
   };
 
   const handleDescriptionChange = (event) => {
