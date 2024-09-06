@@ -12,7 +12,7 @@ function Hero() {
           />
           <img
             src={NewPostImg}
-            className="max-w-xs sm:max-w-sm h-auto absolute m-2 p-5 pb-10 mb-10 -top-32 right-0 lg:-right-20 mx-auto lg:mx-0"
+            className="max-w-xs sm:max-w-sm h-auto absolute m-2 p-5 pb-10 mb-10 -top-20 right-0 lg:-right-20 mx-auto lg:mx-0"
           />
           <img
             src={NoteImg}

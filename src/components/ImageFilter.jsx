@@ -30,7 +30,6 @@ function ImageFilter({ imageSrc }) {
           className="w-full h-auto rounded-lg border border-gray-300"
         />
       </div>
-      {/* Sliders para cambiar los filtros */}
       <div className="flex flex-col space-y-4">
         <div>
           <label>Brillo</label>

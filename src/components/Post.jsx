@@ -24,7 +24,7 @@ function Posts() {
   }, []);
 
   return (
-    <div>
+    <div className="my-40">
       {posts.map((post) => {
         const hasLiked =
           Array.isArray(post.likes) && post.likes.includes(user.uid);
@@ -32,7 +32,7 @@ function Posts() {
         return (
           <div
             key={post.id}
-            className="card max-w-md mx-auto bg-base-100 shadow-xl my-40"
+            className="card max-w-md mx-auto bg-base-100 shadow-2xl my-10"
           >
             <div className="card-body p-4">
               <div className="flex items-center gap-4">
