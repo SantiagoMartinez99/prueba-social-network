@@ -23,8 +23,7 @@ const images = [
 
 function Hero() {
   return (
-    <div className="hero animated-background bg-none min-h-screen font-inter">
-      <div className="area z-50">
+    <div className="area z-50">
         <ul className="circles">
           <li></li>
           <li></li>
@@ -37,8 +36,9 @@ function Hero() {
           <li></li>
           <li></li>
         </ul>
-      </div>
-      <div className="hero-content flex-col lg:flex-row-reverse justify-center items-center ">
+    <div className="hero animated-background bg-none min-h-screen font-inter ">
+      
+      <div className="hero-content flex-col lg:flex-row-reverse justify-center items-center pt-20">
         <div className="grid grid-cols-3 gap-4 h-full">
           {images.map((src, index) => (
             <div key={index} className="relative overflow-hidden rounded-lg">
@@ -63,6 +63,8 @@ function Hero() {
         </div>
       </div>
     </div>
+    </div>
+
   );
 }
 
