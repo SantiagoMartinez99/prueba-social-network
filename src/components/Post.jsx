@@ -1,12 +1,14 @@
 import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import useAuthStore from "../store/storeAuth";
 import store from "../store/storePosts";
 
 const { usePostStore } = store;
 
 function Posts() {
+  const [loading, setLoading] = useState(true);
+
   const {
     posts,
     handleLikeClick,
@@ -18,10 +20,19 @@ function Posts() {
   const { user } = useAuthStore();
 
   useEffect(() => {
+    setLoading(true);
+
     fetchPosts();
+    setLoading(false);
   }, []);
 
-  return (
+  return loading ? (
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-l from-indigo-400 to-cyan-400">
+      <div className="text-center text-white text-2xl font-bold">
+        <p>Cargando...</p>
+      </div>
+    </div>
+  ) : (
     <div className="my-40">
       {posts.map((post) => {
         const hasLiked =
@@ -96,6 +107,8 @@ function Posts() {
                 )}
                 <div className="relative mt-4">
                   <input
+                    id={`comment-input-${post.id}`}
+                    name={`comment-${post.id}`}
                     type="text"
                     placeholder="Escribe un comentario..."
                     value={commentText}

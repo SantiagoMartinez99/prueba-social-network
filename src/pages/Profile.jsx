@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import useAuthStore from "../store/storeAuth";
 import store from "../store/storePosts";
 import { db } from "../firebase";
@@ -9,10 +9,12 @@ const { usePostStore } = store;
 function Profile() {
   const { user } = useAuthStore();
   const { posts, setPosts } = usePostStore();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserPosts = async () => {
       if (user) {
+        setLoading(true);
         try {
           const postsQuery = query(
             collection(db, "posts"),
@@ -26,14 +28,31 @@ function Profile() {
           setPosts(userPosts);
         } catch (error) {
           console.error("Error fetching user posts:", error);
+        } finally {
+          setLoading(false);
         }
       }
     };
-
     fetchUserPosts();
   }, [user, setPosts]);
 
-  return (
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-l from-indigo-400 to-cyan-400">
+        <div className="text-center text-white text-2xl font-bold">
+          Cargando posts...
+        </div>
+      </div>
+    );
+  }
+
+  return loading ? (
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-l from-indigo-400 to-cyan-400">
+      <div className="text-center text-white text-2xl font-bold">
+        <p>Cargando...</p>
+      </div>
+    </div>
+  ) : (
     <div className="my-60 px-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-20">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">

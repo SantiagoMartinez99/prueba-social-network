@@ -1,11 +1,5 @@
 import { create } from "zustand";
-import {
-  auth,
-  provider,
-  signInWithPopup,
-  signOut,
-  storage,
-} from "../firebase";
+import { auth, provider, signInWithPopup, signOut, storage } from "../firebase";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -75,7 +69,10 @@ const useAuthStore = create((set) => ({
         password
       );
       set({ user: userCredential.user, loading: false });
+      toast.success("Inicio de sesión exitoso");
+      navigate("/");
     } catch (error) {
+      toast.error("Error al procesar la solicitud. Verifica tus credenciales.");
       set({ error: error.message, loading: false });
     }
   },
@@ -84,4 +81,3 @@ const useAuthStore = create((set) => ({
 }));
 
 export default useAuthStore;
-
