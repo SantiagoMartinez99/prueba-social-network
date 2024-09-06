@@ -100,7 +100,7 @@ function Posts() {
                     placeholder="Escribe un comentario..."
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
-                    className="input input-bordered w-full mb-4 h-9 pr-16" // Agrega padding a la derecha para el botón
+                    className="input input-bordered w-full mb-4 h-9 pr-16"
                   />
                   <button
                     onClick={() => handleAddComment(post.id)}

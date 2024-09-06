@@ -11,6 +11,7 @@ function SignIn() {
   const [image, setImage] = useState(null);
   const [isRegistering, setIsRegistering] = useState(false);
   const navigate = useNavigate();
+  const { loginWithGoogle } = useAuthStore();
 
   const { registerWithEmail, loginWithEmail } = useAuthStore();
 
@@ -33,6 +34,15 @@ function SignIn() {
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setImage(e.target.files[0]);
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      await loginWithGoogle();
+      navigate("/foryou");
+    } catch (error) {
+      console.error("Error during login:", error);
     }
   };
 
@@ -73,12 +83,20 @@ function SignIn() {
           onChange={(e) => setPassword(e.target.value)}
           className="mb-6 w-full p-2 border border-gray-300 rounded"
         />
-        <button
-          onClick={handleAuth}
-          className="w-full font-bold text-white bg-gradient-to-r from-indigo-400 to-cyan-400 px-4 py-2 rounded-lg"
-        >
-          {isRegistering ? "Registrarse" : "Iniciar sesión"}
-        </button>
+        <div className="flex flex-col gap-2">
+          <button
+            onClick={handleAuth}
+            className="w-full font-bold text-white bg-gradient-to-r from-indigo-400 to-cyan-400 px-4 py-2 rounded-lg "
+          >
+            {isRegistering ? "Registrarse" : "Iniciar sesión"}
+          </button>
+          <button
+            className="w-full font-bold text-white bg-gradient-to-r from-indigo-400 to-cyan-400 px-4 py-2 rounded-lg"
+            onClick={handleLogin}
+          >
+            Iniciar sesión con Google
+          </button>
+        </div>
         <p className="mt-4 text-center">
           {isRegistering ? (
             <>

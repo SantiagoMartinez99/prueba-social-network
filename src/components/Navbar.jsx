@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../store/storeAuth";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const { user, loginWithGoogle, logout } = useAuthStore();
@@ -51,10 +52,10 @@ function Navbar() {
                   className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 text-black"
                 >
                   <li>
-                    <a onClick={() => navigate("/foryou")}>Para ti</a>
+                    <Link to="/foryou">Para ti</Link>
                   </li>
                   <li>
-                    <a onClick={() => navigate("/profile")}>Perfil</a>
+                    <Link to="/Profile">Para ti</Link>
                   </li>
 
                   <li>
